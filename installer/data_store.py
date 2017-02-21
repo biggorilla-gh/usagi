@@ -4,19 +4,56 @@ class PSQLHandle(object):
     def __init__(self, name, dsn):
         self.SQL_GET_META_DATA = """
 SELECT
-    t.table_schema,
-    t.table_name,
-    jsonb_object_agg(c.column_name, c.data_type) AS col_to_type
+    schema_name || '.' || table_name AS title,
+    schema_name || ' '
+    || table_name || ' '
+    || table_comment || ' '
+    || string_agg(column_name || ' '    || column_comment, ' ') AS content
 FROM
-    information_schema.tables t,
-    information_schema.columns c
-WHERE
-    t.table_schema != 'information_schema'
-AND t.table_schema != 'pg_catalog'
-AND t.table_schema = c.table_schema
-AND t.table_name = c.table_name
-GROUP BY
-    t.table_schema, t.table_name"""
+(
+SELECT
+  psut.relid table_oid,
+    psut.schemaname schema_name,
+    psut.relname table_name,
+    CASE WHEN pd.description IS NULL THEN '' ELSE pd.description END table_comment
+FROM
+    pg_stat_user_tables psut
+LEFT JOIN
+(
+    SELECT *
+    FROM
+        pg_description pd
+    WHERE
+        pd.objsubid IS NULL OR pd.objsubid = 0
+) pd
+ON
+    psut.relid = pd.objoid
+) r
+JOIN
+(
+SELECT
+  psut.relid table_oid,
+    pa.attname column_name,
+    CASE WHEN pd.description IS NULL THEN '' ELSE pd.description END column_comment
+FROM
+    pg_stat_user_tables psut
+JOIN
+    pg_attribute pa
+ON
+    psut.relid = pa.attrelid
+LEFT JOIN
+(
+    SELECT *
+    FROM
+        pg_description pd
+    WHERE
+        pd.objsubid IS NULL OR pd.objsubid != 0
+) pd
+ON
+    psut.relid = pd.objoid AND pd.objsubid = pa.attnum
+) s
+USING (table_oid)
+GROUP BY schema_name, table_name, table_comment"""
 
         self.name = name
         self.dsn = dsn

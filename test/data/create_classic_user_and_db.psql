@@ -1,0 +1,5 @@
+DROP ROLE IF EXISTS classic_user;
+CREATE ROLE classic_user WITH LOGIN SUPERUSER PASSWORD 'password';
+DROP DATABASE IF EXISTS classicmodels;
+CREATE DATABASE classicmodels;
+

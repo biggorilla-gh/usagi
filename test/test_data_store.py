@@ -24,9 +24,8 @@ def test_copy_raw_meta_data():
         n_tables = 0
         for row in reader:
             n_tables += 1
-            if row['table_name'] == 'Products':
-                col2type = ast.literal_eval(row['col_to_type'])
-                assert col2type['quantityInStock'] == 'smallint'
+            if row['title'] == 'public.Products':
+                assert "Products Information" in row['content']
         assert n_tables == 8
 
 

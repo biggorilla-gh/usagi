@@ -33,7 +33,7 @@ def test_parse_simple():
     assert pg_handle.name == 'ClassicModels'
     assert "host=localhost" in pg_handle.dsn
     assert "port=5432" in pg_handle.dsn
-    assert "user=xfeng" in pg_handle.dsn
+    assert "user=classic_user" in pg_handle.dsn
     assert "dbname=classicmodels" in pg_handle.dsn
 
 

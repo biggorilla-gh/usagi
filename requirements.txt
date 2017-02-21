@@ -1,0 +1,4 @@
+pytest
+psycopg2
+pytest-pythonpath
+

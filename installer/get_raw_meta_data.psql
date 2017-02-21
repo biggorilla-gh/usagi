@@ -1,0 +1,46 @@
+SELECT
+	*
+FROM
+(
+SELECT
+  psut.relid table_oid,
+	psut.schemaname schema_name,
+	psut.relname table_name,
+	pd.description table_comment
+FROM
+	pg_stat_user_tables psut
+LEFT JOIN
+(
+	SELECT *
+	FROM
+		pg_description pd
+	WHERE
+		pd.objsubid IS NULL OR pd.objsubid = 0
+) pd
+ON
+	psut.relid = pd.objoid
+) r
+JOIN
+(
+SELECT
+  psut.relid table_oid,
+	pa.attname column_name,
+	pd.description column_comment
+FROM
+	pg_stat_user_tables psut
+JOIN	
+	pg_attribute pa
+ON
+	psut.relid = pa.attrelid
+LEFT JOIN
+(
+	SELECT *
+	FROM
+		pg_description pd
+	WHERE
+		pd.objsubid IS NULL OR pd.objsubid != 0
+) pd
+ON
+	psut.relid = pd.objoid AND pd.objsubid = pa.attnum
+) s
+USING (table_oid)
