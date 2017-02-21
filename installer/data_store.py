@@ -4,11 +4,12 @@ class PSQLHandle(object):
     def __init__(self, name, dsn):
         self.SQL_GET_META_DATA = """
 SELECT
-    schema_name || '.' || table_name AS title,
+    CASE WHEN schema_name = 'public' THEN table_name
+        ELSE schema_name || '.' || table_name END AS title,
     schema_name || ' '
     || table_name || ' '
     || table_comment || ' '
-    || string_agg(column_name || ' '    || column_comment, ' ') AS content
+    || string_agg(column_name || ' ' || column_comment, ' ') AS content
 FROM
 (
 SELECT

@@ -22,11 +22,15 @@ def test_copy_raw_meta_data():
     with open("/tmp/simple.meta") as metadata:
         reader = csv.DictReader(metadata)
         n_tables = 0
+        products_table_exists = 0
         for row in reader:
             n_tables += 1
-            if row['title'] == 'public.Products':
-                assert "Products Information" in row['content']
+            if row['title'] == 'Products':
+                products_table_exists += 1
+                assert "xmin" in row['content']
+                assert "productDescription" in row['content']
         assert n_tables == 8
+        assert products_table_exists == 1
 
 
 import errno

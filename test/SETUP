@@ -1,2 +1,2 @@
-PGPASSWORD=postgres psql -U postgres -f test/data/create_classic_user_and_db.psql
+psql postgres -f test/data/create_classic_user_and_db.psql
 PGPASSWORD=password psql -U classic_user classicmodels -f test/data/ClassicModels.psql
