@@ -1,0 +1,6 @@
+# setup solr
+
+```
+./setup.sh
+```
+
