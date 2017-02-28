@@ -65,9 +65,9 @@ GROUP BY schema_name, table_name, table_comment"""
     def close(self):
         self.connection.close()
 
-    def copy_raw_meta_data(self, output_path):
+    def copy_raw_meta_data(self, output_path, append=False):
         cur = self.connection.cursor()
-        f = open(output_path, 'w')
+        f = open(output_path, 'a' if append else 'w')
         sql_copy = "COPY (%s) TO STDOUT WITH CSV HEADER" % self.SQL_GET_META_DATA
         cur.copy_expert(sql_copy, f)
         f.close()

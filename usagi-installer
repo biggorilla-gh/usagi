@@ -1,0 +1,87 @@
+#!/bin/bash
+
+## ########################################################################
+## Installer of Usagi
+## ########################################################################
+
+COMMAND=`basename $0`
+USAGE="COMMAND NAME: ${COMMAND}
+
+Installer of Usagi
+
+
+*****************************************************
+SYNOPSIS
+*****************************************************
+
+${COMMAND} --data-store <DS_CONFIG>
+
+${COMMAND} -h
+
+
+*****************************************************
+PREREQUISITES
+*****************************************************
+
+The following requirements should be satisfied prior to executing this script:
+
+* Make sure data stores to be used are running
+* Python 2.7+, Java 1.8+ installed
+
+
+*****************************************************
+OPTIONS
+*****************************************************
+
+-d | --data-store <DS_CONFIG>
+Required. Path to the configuration file for user data stores.
+
+-h | -? | --help
+ Displays the online help.
+
+
+*****************************************************
+EXAMPLE
+*****************************************************
+
+./${COMMAND} --data-store ./classic_models.cfg
+"
+HELP="Try option -h for detailed usage."
+
+## ########################################################################
+## parsing command-line args
+if [ $# -lt 1 ]; then
+    echo "$0: Missing required arguments. ${HELP}"
+    exit 1
+fi
+until [ -z $1 ]
+do
+    case "$1" in
+        -d|--data-store)      DATA_STORE=$2; shift;;
+        -h|-?|--help)
+            echo "${USAGE}";
+            exit 1;;
+        *)
+            echo "$0: No such option $1. ${HELP}";
+            exit 1;;
+    esac
+    shift
+done
+# checking and verbosing options
+if [ ${DATA_STORE} ]; then
+    echo "Using data store configuration file: ${DATA_STORE}"
+else
+    echo "$0: DATA_STORE is not set or empty. ${HELP}"
+    exit 1
+fi
+
+META_DATA_FILE=/tmp/still_simple.meta
+rm ${META_DATA_FILE} 2> /dev/null
+CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PYTHONPATH=${CURR_DIR} python ${CURR_DIR}/installer/run.py ${DATA_STORE} ${META_DATA_FILE}
+cd ${CURR_DIR}/solr
+./setup.sh
+cd ${CURR_DIR}/importer
+python import.py ${META_DATA_FILE}
+${CURR_DIR}/solr/solr/bin/solr stop
+
