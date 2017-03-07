@@ -8,11 +8,11 @@ solr = solr()
 
 datalist = []
 with open(meta_data_file) as metadata:
-    reader = csv.DictReader(metadata)
+    reader = csv.reader(metadata)
     for row in reader:
         datalist.append({
-            "title_s": row['title'],
-            "all_txt_ng": row['content'],
+            "title_s": row[0],
+            "all_txt_ng": row[1],
         })
 
 solr.delete(q="*:*")

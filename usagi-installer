@@ -78,6 +78,7 @@ fi
 META_DATA_FILE=/tmp/still_simple.meta
 rm ${META_DATA_FILE} 2> /dev/null
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+(cd ${CURR_DIR}; pip install -r requirements.txt)
 PYTHONPATH=${CURR_DIR} python ${CURR_DIR}/installer/run.py ${DATA_STORE} ${META_DATA_FILE}
 cd ${CURR_DIR}/solr
 ./setup.sh
