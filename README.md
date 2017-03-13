@@ -24,10 +24,14 @@ B. Execute the Usagi installer:
 ./usagi-installer --data-store classic_models.cfg
 ~~~
 
-C. Start Solr server
+C. Start Solr server and JSON API
 
 ~~~bash
 ./solr/solr/bin/solr start
+cd api
+pkill -KILL api_server.py
+python api_server.py &
+cd ..
 ~~~
 
 D. Try to search
@@ -35,6 +39,12 @@ D. Try to search
 ~~~bash
 cd importer
 python search.py <your_favourite_keyword>
+~~~
+
+E. Try JSON API
+
+~~~bash
+curl http://localhost:8085/api/search?q=<your_favourite_keyword>
 ~~~
 
 
