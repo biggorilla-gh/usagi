@@ -1,14 +1,14 @@
 # importer
 
-## data import
+## data sync database to solr
 
 ```
-python import.py /path/to/meta_file
+./run importer/sync_db2solr.py
 ```
 
 ## search
 
 ```
-python search.py 'Customer'
+./run importer/search.py 'Customer'
 ```
 

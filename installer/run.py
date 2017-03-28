@@ -1,6 +1,9 @@
 import os
 import sys
+import csv
 from installer.tool_config import *
+from lib.database import Document, Database
+from lib.solr import solr
 
 def main(args):
     if len(args) != 2:
@@ -28,6 +31,33 @@ def main(args):
         handle.connect()
         handle.copy_raw_meta_data(meta_data_file, append=True)
         handle.close()
+    
+    
+    # meta to database
+    doc = Document()
+    doc.clear()
+    with open(meta_data_file) as metadata:
+        reader = csv.reader(metadata)
+        for row in reader:
+            doc.create(row[0], row[1])
+    doc.close()
+
+    # database to solr
+    s = solr()
+    db = Database()
+    db.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM documents")
+    datalist = []
+    for row in cursor.fetchall():
+        datalist.append({
+            "title_s": row["title"],
+            "all_txt_ng": row["keywords"],
+        })
+    cursor.close()
+    db.close()
+    s.delete(q="*:*")
+    s.add(datalist)
 
     return 0
 

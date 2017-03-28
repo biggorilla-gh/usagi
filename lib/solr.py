@@ -1,7 +1,8 @@
 import pysolr
+from config.config import *
 
 def solr():
-    return pysolr.Solr("http://localhost:8982/solr/usagi", timeout=10)
+    return pysolr.Solr("http://{host}:{port}/solr/{core}".format(**CONFIG["SOLR"]), timeout=10)
 
 def solr_sanitize(query):
     if not query:

@@ -1,8 +1,5 @@
-import sys,os
-sys.path.append(os.pardir + "/importer")
-
 from flask import Flask, request
-from solr import *
+from lib.solr import *
 import json
 
 solr = solr()

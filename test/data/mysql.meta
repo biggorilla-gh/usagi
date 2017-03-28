@@ -1,0 +1,136 @@
+employees.departments,employees departments  dept_no  dept_name 
+employees.dept_emp,employees dept_emp  emp_no  dept_no  from_date  to_date 
+employees.dept_manager,employees dept_manager  dept_no  emp_no  from_date  to_date 
+employees.employees,employees employees  emp_no  birth_date  first_name  last_name  gender  hire_date 
+employees.salaries,employees salaries  emp_no  salary  from_date  to_date 
+employees.titles,employees titles  emp_no  title  from_date  to_date 
+sakila.actor,sakila actor  actor_id  first_name  last_name  last_update 
+sakila.actor_info,sakila actor_info VIEW actor_id  first_name  last_name  film_info 
+sakila.address,sakila address  address_id  address  address2  district  city_id  postal_code  phone  last_update 
+sakila.category,sakila category  category_id  name  last_update 
+sakila.city,sakila city  city_id  city  country_id  last_update 
+sakila.country,sakila country  country_id  country  last_update 
+sakila.customer,sakila customer  customer_id  store_id  first_name  last_name  email  address_id  active  create_date  last_update 
+sakila.customer_list,sakila customer_list VIEW ID  name  address  zip code  phone  city  country  notes  SID 
+sakila.film,sakila film  film_id  title  description  release_year  language_id  original_language_id  rental_duration  rental_rate  length  replacement_cost  rating  special_features  last_update 
+sakila.film_actor,sakila film_actor  actor_id  film_id  last_update 
+sakila.film_category,sakila film_category  film_id  category_id  last_update 
+sakila.film_list,sakila film_list VIEW FID  title  description  category  price  length  rating  actors 
+sakila.film_text,sakila film_text  film_id  title  description 
+sakila.inventory,sakila inventory  inventory_id  film_id  store_id  last_update 
+sakila.language,sakila language  language_id  name  last_update 
+sakila.nicer_but_slower_film_list,sakila nicer_but_slower_film_list VIEW FID  title  description  category  price  length  rating  actors 
+sakila.payment,sakila payment  payment_id  customer_id  staff_id  rental_id  amount  payment_date  last_update 
+sakila.rental,sakila rental  rental_id  rental_date  inventory_id  customer_id  return_date  staff_id  last_update 
+sakila.sales_by_film_category,sakila sales_by_film_category VIEW category  total_sales 
+sakila.sales_by_store,sakila sales_by_store VIEW store  manager  total_sales 
+sakila.staff,sakila staff  staff_id  first_name  last_name  address_id  picture  email  store_id  active  username  password  last_update 
+sakila.staff_list,sakila staff_list VIEW ID  name  address  zip code  phone  city  country  SID 
+sakila.store,sakila store  store_id  manager_staff_id  address_id  last_update 
+sportsdb.addresses,sportsdb addresses  id  location_id  language  suite  floor  building  street_number  street_prefix  street  street_suffix  neighborhood  district  locality  county  region  postal_code  country 
+sportsdb.affiliations,sportsdb affiliations  id  affiliation_key  affiliation_type  publisher_id 
+sportsdb.affiliations_documents,sportsdb affiliations_documents  affiliation_id  document_id 
+sportsdb.affiliations_events,sportsdb affiliations_events  affiliation_id  event_id 
+sportsdb.affiliations_media,sportsdb affiliations_media  affiliation_id  media_id 
+sportsdb.affiliation_phases,sportsdb affiliation_phases  id  affiliation_id  ancestor_affiliation_id  start_season_id  start_date_time  end_season_id  end_date_time 
+sportsdb.american_football_action_participants,sportsdb american_football_action_participants  id  american_football_action_play_id  person_id  participant_role  score_type  field_line  yardage  score_credit  yards_gained 
+sportsdb.american_football_action_plays,sportsdb american_football_action_plays  id  american_football_event_state_id  play_type  score_attempt_type  drive_result  points  comment 
+sportsdb.american_football_defensive_stats,sportsdb american_football_defensive_stats  id  tackles_total  tackles_solo  tackles_assists  interceptions_total  interceptions_yards  interceptions_average  interceptions_longest  interceptions_touchdown  quarterback_hurries  sacks_total  sacks_yards  passes_defensed 
+sportsdb.american_football_down_progress_stats,sportsdb american_football_down_progress_stats  id  first_downs_total  first_downs_pass  first_downs_run  first_downs_penalty  conversions_third_down  conversions_third_down_attempts  conversions_third_down_percentage  conversions_fourth_down  conversions_fourth_down_attempts  conversions_fourth_down_percentage 
+sportsdb.american_football_event_states,sportsdb american_football_event_states  id  event_id  current_state  sequence_number  period_value  period_time_elapsed  period_time_remaining  clock_state  down  team_in_possession_id  distance_for_1st_down  field_side  field_line  context 
+sportsdb.american_football_fumbles_stats,sportsdb american_football_fumbles_stats  id  fumbles_committed  fumbles_forced  fumbles_recovered  fumbles_lost  fumbles_yards_gained  fumbles_own_committed  fumbles_own_recovered  fumbles_own_lost  fumbles_own_yards_gained  fumbles_opposing_committed  fumbles_opposing_recovered  fumbles_opposing_lost  fumbles_opposing_yards_gained 
+sportsdb.american_football_offensive_stats,sportsdb american_football_offensive_stats  id  offensive_plays_yards  offensive_plays_number  offensive_plays_average_yards_per  possession_duration  turnovers_giveaway 
+sportsdb.american_football_passing_stats,sportsdb american_football_passing_stats  id  passes_attempts  passes_completions  passes_percentage  passes_yards_gross  passes_yards_net  passes_yards_lost  passes_touchdowns  passes_touchdowns_percentage  passes_interceptions  passes_interceptions_percentage  passes_longest  passes_average_yards_per  passer_rating  receptions_total  receptions_yards  receptions_touchdowns  receptions_first_down  receptions_longest  receptions_average_yards_per 
+sportsdb.american_football_penalties_stats,sportsdb american_football_penalties_stats  id  penalties_total  penalty_yards  penalty_first_downs 
+sportsdb.american_football_rushing_stats,sportsdb american_football_rushing_stats  id  rushes_attempts  rushes_yards  rushes_touchdowns  rushing_average_yards_per  rushes_first_down  rushes_longest 
+sportsdb.american_football_sacks_against_stats,sportsdb american_football_sacks_against_stats  id  sacks_against_yards  sacks_against_total 
+sportsdb.american_football_scoring_stats,sportsdb american_football_scoring_stats  id  touchdowns_total  touchdowns_passing  touchdowns_rushing  touchdowns_special_teams  touchdowns_defensive  extra_points_attempts  extra_points_made  extra_points_missed  extra_points_blocked  field_goal_attempts  field_goals_made  field_goals_missed  field_goals_blocked  safeties_against  two_point_conversions_attempts  two_point_conversions_made  touchbacks_total 
+sportsdb.american_football_special_teams_stats,sportsdb american_football_special_teams_stats  id  returns_punt_total  returns_punt_yards  returns_punt_average  returns_punt_longest  returns_punt_touchdown  returns_kickoff_total  returns_kickoff_yards  returns_kickoff_average  returns_kickoff_longest  returns_kickoff_touchdown  returns_total  returns_yards  punts_total  punts_yards_gross  punts_yards_net  punts_longest  punts_inside_20  punts_inside_20_percentage  punts_average  punts_blocked  touchbacks_total  touchbacks_total_percentage  touchbacks_kickoffs  touchbacks_kickoffs_percentage  touchbacks_punts  touchbacks_punts_percentage  touchbacks_interceptions  touchbacks_interceptions_percentage  fair_catches 
+sportsdb.baseball_action_contact_details,sportsdb baseball_action_contact_details  id  baseball_action_pitch_id  location  strength  velocity  comment  trajectory_coordinates  trajectory_formula 
+sportsdb.baseball_action_pitches,sportsdb baseball_action_pitches  id  baseball_action_play_id  sequence_number  baseball_defensive_group_id  umpire_call  pitch_location  pitch_type  pitch_velocity  comment  trajectory_coordinates  trajectory_formula  ball_type  strike_type 
+sportsdb.baseball_action_plays,sportsdb baseball_action_plays  id  baseball_event_state_id  play_type  notation  notation_yaml  baseball_defensive_group_id  comment  runner_on_first_advance  runner_on_second_advance  runner_on_third_advance  outs_recorded  rbi  runs_scored  earned_runs_scored 
+sportsdb.baseball_action_substitutions,sportsdb baseball_action_substitutions  id  baseball_event_state_id  sequence_number  person_type  person_original_id  person_original_position_id  person_original_lineup_slot  person_replacing_id  person_replacing_position_id  person_replacing_lineup_slot  substitution_reason  comment 
+sportsdb.baseball_defensive_group,sportsdb baseball_defensive_group  id 
+sportsdb.baseball_defensive_players,sportsdb baseball_defensive_players  id  baseball_defensive_group_id  player_id  position_id 
+sportsdb.baseball_defensive_stats,sportsdb baseball_defensive_stats  id  double_plays  triple_plays  putouts  assists  errors  fielding_percentage  defensive_average  errors_passed_ball  errors_catchers_interference 
+sportsdb.baseball_event_states,sportsdb baseball_event_states  id  event_id  current_state  sequence_number  at_bat_number  inning_value  inning_half  outs  balls  strikes  runner_on_first_id  runner_on_second_id  runner_on_third_id  runner_on_first  runner_on_second  runner_on_third  runs_this_inning_half  pitcher_id  batter_id  batter_side  context 
+sportsdb.baseball_offensive_stats,sportsdb baseball_offensive_stats  id  average  runs_scored  at_bats  hits  rbi  total_bases  slugging_percentage  bases_on_balls  strikeouts  left_on_base  left_in_scoring_position  singles  doubles  triples  home_runs  grand_slams  at_bats_per_rbi  plate_appearances_per_rbi  at_bats_per_home_run  plate_appearances_per_home_run  sac_flies  sac_bunts  grounded_into_double_play  moved_up  on_base_percentage  stolen_bases  stolen_bases_caught  stolen_bases_average  hit_by_pitch  defensive_interferance_reaches  on_base_plus_slugging  plate_appearances  hits_extra_base 
+sportsdb.baseball_pitching_stats,sportsdb baseball_pitching_stats  id  runs_allowed  singles_allowed  doubles_allowed  triples_allowed  home_runs_allowed  innings_pitched  hits  earned_runs  unearned_runs  bases_on_balls  bases_on_balls_intentional  strikeouts  strikeout_to_bb_ratio  number_of_pitches  era  inherited_runners_scored  pick_offs  errors_hit_with_pitch  errors_wild_pitch  balks  wins  losses  saves  shutouts  games_complete  games_finished  winning_percentage  event_credit  save_credit 
+sportsdb.basketball_defensive_stats,sportsdb basketball_defensive_stats  id  steals_total  steals_per_game  blocks_total  blocks_per_game 
+sportsdb.basketball_event_states,sportsdb basketball_event_states  id  event_id  current_state  sequence_number  period_value  period_time_elapsed  period_time_remaining  context 
+sportsdb.basketball_offensive_stats,sportsdb basketball_offensive_stats  id  field_goals_made  field_goals_attempted  field_goals_percentage  field_goals_per_game  field_goals_attempted_per_game  field_goals_percentage_adjusted  three_pointers_made  three_pointers_attempted  three_pointers_percentage  three_pointers_per_game  three_pointers_attempted_per_game  free_throws_made  free_throws_attempted  free_throws_percentage  free_throws_per_game  free_throws_attempted_per_game  points_scored_total  points_scored_per_game  assists_total  assists_per_game  turnovers_total  turnovers_per_game  points_scored_off_turnovers  points_scored_in_paint  points_scored_on_second_chance  points_scored_on_fast_break 
+sportsdb.basketball_rebounding_stats,sportsdb basketball_rebounding_stats  id  rebounds_total  rebounds_per_game  rebounds_defensive  rebounds_offensive  team_rebounds_total  team_rebounds_per_game  team_rebounds_defensive  team_rebounds_offensive 
+sportsdb.basketball_team_stats,sportsdb basketball_team_stats  id  timeouts_left  largest_lead  fouls_total  turnover_margin 
+sportsdb.bookmakers,sportsdb bookmakers  id  bookmaker_key  publisher_id  location_id 
+sportsdb.core_person_stats,sportsdb core_person_stats  id  time_played_event  time_played_total  time_played_event_average  events_played  events_started  position_id 
+sportsdb.core_stats,sportsdb core_stats  id  score  score_opposing  score_attempts  score_attempts_opposing  score_percentage  score_percentage_opposing 
+sportsdb.db_info,sportsdb db_info  version 
+sportsdb.display_names,sportsdb display_names  id  language  entity_type  entity_id  full_name  first_name  middle_name  last_name  alias  abbreviation  short_name  prefix  suffix 
+sportsdb.documents,sportsdb documents  id  doc_id  publisher_id  date_time  title  language  priority  revision_id  stats_coverage  document_fixture_id  source_id  db_loading_date_time 
+sportsdb.documents_media,sportsdb documents_media  id  document_id  media_id  media_caption_id 
+sportsdb.document_classes,sportsdb document_classes  id  name 
+sportsdb.document_contents,sportsdb document_contents  id  document_id  sportsml  abstract 
+sportsdb.document_fixtures,sportsdb document_fixtures  id  fixture_key  publisher_id  name  document_class_id 
+sportsdb.document_fixtures_events,sportsdb document_fixtures_events  id  document_fixture_id  event_id  latest_document_id  last_update 
+sportsdb.document_packages,sportsdb document_packages  id  package_key  package_name  date_time 
+sportsdb.document_package_entry,sportsdb document_package_entry  id  document_package_id  rank  document_id  headline  short_headline 
+sportsdb.events,sportsdb events  EVENT_CATALOG  EVENT_SCHEMA  EVENT_NAME  DEFINER  TIME_ZONE  EVENT_BODY  EVENT_DEFINITION  EVENT_TYPE  EXECUTE_AT  INTERVAL_VALUE  INTERVAL_FIELD  SQL_MODE  STARTS  ENDS  STATUS  ON_COMPLETION  CREATED  LAST_ALTERED  LAST_EXECUTED  EVENT_COMMENT  ORIGINATOR  CHARACTER_SET_CLIENT  COLLATION_CONNECTION  DATABASE_COLLATION  id  event_key  publisher_id  start_date_time  site_id  site_alignment  event_status  duration  attendance  last_update 
+sportsdb.events_documents,sportsdb events_documents  event_id  document_id 
+sportsdb.events_media,sportsdb events_media  event_id  media_id 
+sportsdb.events_sub_seasons,sportsdb events_sub_seasons  event_id  sub_season_id 
+sportsdb.ice_hockey_action_participants,sportsdb ice_hockey_action_participants  id  ice_hockey_action_play_id  person_id  participant_role  point_credit 
+sportsdb.ice_hockey_action_plays,sportsdb ice_hockey_action_plays  id  ice_hockey_event_state_id  play_type  score_attempt_type  play_result  comment 
+sportsdb.ice_hockey_defensive_stats,sportsdb ice_hockey_defensive_stats  id  shots_power_play_allowed  shots_penalty_shot_allowed  goals_power_play_allowed  goals_penalty_shot_allowed  goals_against_average  saves  save_percentage  penalty_killing_amount  penalty_killing_percentage  shots_blocked  takeaways  shutouts  minutes_penalty_killing  hits  goals_empty_net_allowed  goals_short_handed_allowed  goals_shootout_allowed  shots_shootout_allowed 
+sportsdb.ice_hockey_event_states,sportsdb ice_hockey_event_states  id  event_id  current_state  sequence_number  period_value  period_time_elapsed  period_time_remaining  context 
+sportsdb.ice_hockey_offensive_stats,sportsdb ice_hockey_offensive_stats  id  goals_game_winning  goals_game_tying  goals_power_play  goals_short_handed  goals_even_strength  goals_empty_net  goals_overtime  goals_shootout  goals_penalty_shot  assists  points  power_play_amount  power_play_percentage  shots_penalty_shot_taken  shots_penalty_shot_missed  shots_penalty_shot_percentage  giveaways  minutes_power_play  faceoff_wins  faceoff_losses  faceoff_win_percentage  scoring_chances 
+sportsdb.ice_hockey_player_stats,sportsdb ice_hockey_player_stats  id  plus_minus 
+sportsdb.injury_phases,sportsdb injury_phases  id  person_id  injury_status  injury_type  injury_comment  disabled_list  start_date_time  end_date_time  season_id  phase_type  injury_side 
+sportsdb.key_aliases,sportsdb key_aliases  id  key_id  key_root_id 
+sportsdb.key_roots,sportsdb key_roots  id  key_type 
+sportsdb.latest_revisions,sportsdb latest_revisions  id  revision_id  latest_document_id 
+sportsdb.locations,sportsdb locations  id  timezone  latitude  longitude  country_code 
+sportsdb.media,sportsdb media  id  object_id  source_id  revision_id  media_type  publisher_id  date_time  credit_id  db_loading_date_time  creation_location_id 
+sportsdb.media_captions,sportsdb media_captions  id  media_id  caption_type  caption  caption_author_id  language  caption_size 
+sportsdb.media_contents,sportsdb media_contents  id  media_id  object  format  mime_type  height  width  duration  file_size  resolution 
+sportsdb.media_keywords,sportsdb media_keywords  id  keyword  media_id 
+sportsdb.motor_racing_event_states,sportsdb motor_racing_event_states  id  event_id  current_state  sequence_number  lap  laps_remaining  time_elapsed  flag_state  context 
+sportsdb.motor_racing_qualifying_stats,sportsdb motor_racing_qualifying_stats  id  grid  pole_position  pole_wins  qualifying_speed  qualifying_speed_units  qualifying_time  qualifying_position 
+sportsdb.motor_racing_race_stats,sportsdb motor_racing_race_stats  id  time_behind_leader  laps_behind_leader  time_ahead_follower  laps_ahead_follower  time  points  points_rookie  bonus  laps_completed  laps_leading_total  distance_leading  distance_completed  distance_units  speed_average  speed_units  status  finishes_top_5  finishes_top_10  starts  finishes  non_finishes  wins  races_leading  money  money_units  leads_total 
+sportsdb.outcome_totals,sportsdb outcome_totals  id  standing_subgroup_id  outcome_holder_type  outcome_holder_id  rank  wins  losses  ties  undecideds  winning_percentage  points_scored_for  points_scored_against  points_difference  standing_points  streak_type  streak_duration  streak_total  streak_start  streak_end 
+sportsdb.participants_events,sportsdb participants_events  id  participant_type  participant_id  event_id  alignment  score  event_outcome  rank 
+sportsdb.periods,sportsdb periods  id  participant_event_id  period_value  score 
+sportsdb.persons,sportsdb persons  id  person_key  publisher_id  gender  birth_date  death_date  birth_location_id  hometown_location_id  residence_location_id  death_location_id 
+sportsdb.persons_documents,sportsdb persons_documents  person_id  document_id 
+sportsdb.persons_media,sportsdb persons_media  person_id  media_id 
+sportsdb.person_event_metadata,sportsdb person_event_metadata  id  person_id  event_id  status  health  weight  role_id  position_id  team_id  lineup_slot  lineup_slot_sequence 
+sportsdb.person_phases,sportsdb person_phases  id  person_id  membership_type  membership_id  role_id  role_status  phase_status  uniform_number  regular_position_id  regular_position_depth  height  weight  start_date_time  start_season_id  end_date_time  end_season_id  entry_reason  exit_reason  selection_level  selection_sublevel  selection_overall 
+sportsdb.positions,sportsdb positions  id  affiliation_id  abbreviation 
+sportsdb.publishers,sportsdb publishers  id  publisher_key  publisher_name 
+sportsdb.roles,sportsdb roles  id  role_key  role_name  comment 
+sportsdb.seasons,sportsdb seasons  id  season_key  publisher_id  league_id  start_date_time  end_date_time 
+sportsdb.sites,sportsdb sites  id  site_key  publisher_id  location_id 
+sportsdb.soccer_defensive_stats,sportsdb soccer_defensive_stats  id  shots_penalty_shot_allowed  goals_penalty_shot_allowed  goals_against_average  goals_against_total  saves  save_percentage  catches_punches  shots_on_goal_total  shots_shootout_total  shots_shootout_allowed  shots_blocked  shutouts 
+sportsdb.soccer_event_states,sportsdb soccer_event_states  id  event_id  current_state  sequence_number  period_value  period_time_elapsed  period_time_remaining  minutes_elapsed  period_minute_elapsed  context 
+sportsdb.soccer_foul_stats,sportsdb soccer_foul_stats  id  fouls_suffered  fouls_commited  cautions_total  cautions_pending  caution_points_total  caution_points_pending  ejections_total 
+sportsdb.soccer_offensive_stats,sportsdb soccer_offensive_stats  id  goals_game_winning  goals_game_tying  goals_overtime  goals_shootout  goals_total  assists_game_winning  assists_game_tying  assists_overtime  assists_total  points  shots_total  shots_on_goal_total  shots_hit_frame  shots_penalty_shot_taken  shots_penalty_shot_scored  shots_penalty_shot_missed  shots_penalty_shot_percentage  shots_shootout_taken  shots_shootout_scored  shots_shootout_missed  shots_shootout_percentage  giveaways  offsides  corner_kicks  hat_tricks 
+sportsdb.standings,sportsdb standings  id  affiliation_id  standing_type  sub_season_id  last_updated  duration_scope  competition_scope  competition_scope_id  alignment_scope  site_scope  scoping_label  publisher_id  source 
+sportsdb.standing_subgroups,sportsdb standing_subgroups  id  standing_id  affiliation_id 
+sportsdb.stats,sportsdb stats  id  stat_repository_type  stat_repository_id  stat_holder_type  stat_holder_id  stat_coverage_type  stat_coverage_id  context 
+sportsdb.sub_periods,sportsdb sub_periods  id  period_id  sub_period_value  score 
+sportsdb.sub_seasons,sportsdb sub_seasons  id  sub_season_key  season_id  sub_season_type  start_date_time  end_date_time 
+sportsdb.teams,sportsdb teams  id  team_key  publisher_id  home_site_id 
+sportsdb.teams_documents,sportsdb teams_documents  team_id  document_id 
+sportsdb.teams_media,sportsdb teams_media  team_id  media_id 
+sportsdb.team_american_football_stats,sportsdb team_american_football_stats  id  yards_per_attempt  average_starting_position  timeouts  time_of_possession  turnover_ratio 
+sportsdb.team_phases,sportsdb team_phases  id  team_id  start_season_id  end_season_id  affiliation_id  start_date_time  end_date_time  phase_status  role_id 
+sportsdb.tennis_action_points,sportsdb tennis_action_points  id  sub_period_id  sequence_number  win_type 
+sportsdb.tennis_action_volleys,sportsdb tennis_action_volleys  id  sequence_number  tennis_action_points_id  landing_location  swing_type  result  spin_type  trajectory_details 
+sportsdb.tennis_event_states,sportsdb tennis_event_states  id  event_id  current_state  sequence_number  tennis_set  game  server_person_id  server_score  receiver_person_id  receiver_score  service_number  context 
+sportsdb.tennis_return_stats,sportsdb tennis_return_stats  id  returns_played  matches_played  first_service_return_points_won  first_service_return_points_won_pct  second_service_return_points_won  second_service_return_points_won_pct  return_games_played  return_games_won  return_games_won_pct  break_points_played  break_points_converted  break_points_converted_pct 
+sportsdb.tennis_service_stats,sportsdb tennis_service_stats  id  services_played  matches_played  aces  first_services_good  first_services_good_pct  first_service_points_won  first_service_points_won_pct  second_service_points_won  second_service_points_won_pct  service_games_played  service_games_won  service_games_won_pct  break_points_played  break_points_saved  break_points_saved_pct 
+sportsdb.wagering_moneylines,sportsdb wagering_moneylines  id  bookmaker_id  event_id  date_time  team_id  person_id  rotation_key  comment  vigorish  line  line_opening  prediction 
+sportsdb.wagering_odds_lines,sportsdb wagering_odds_lines  id  bookmaker_id  event_id  date_time  team_id  person_id  rotation_key  comment  numerator  denominator  prediction  payout_calculation  payout_amount 
+sportsdb.wagering_runlines,sportsdb wagering_runlines  id  bookmaker_id  event_id  date_time  team_id  person_id  rotation_key  comment  vigorish  line  line_opening  line_value  prediction 
+sportsdb.wagering_straight_spread_lines,sportsdb wagering_straight_spread_lines  id  bookmaker_id  event_id  date_time  team_id  person_id  rotation_key  comment  vigorish  line_value  line_value_opening  prediction 
+sportsdb.wagering_total_score_lines,sportsdb wagering_total_score_lines  id  bookmaker_id  event_id  date_time  team_id  person_id  rotation_key  comment  vigorish  line_over  line_under  total  total_opening  prediction 
+sportsdb.weather_conditions,sportsdb weather_conditions  id  event_id  temperature  temperature_units  humidity  clouds  wind_direction  wind_velocity  weather_code 

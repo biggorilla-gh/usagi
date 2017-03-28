@@ -2,6 +2,9 @@ import os
 import pytest
 import ConfigParser
 from installer.tool_config import *
+from installer.data_store.psql_handle import PSQLHandle
+from installer.data_store.mysql_handle import MySQLHandle
+from installer.data_store.meta_handle import MetaHandle
 
 TESTDIR = os.path.dirname(os.path.abspath(__file__))
 UNKNOWN = TESTDIR + "/expected_failures/unknown_data_store.ini"
@@ -10,6 +13,7 @@ PG_PORT_NOT_INT = TESTDIR + "/expected_failures/pg_port_not_int.ini"
 MY_PORT_NOT_INT = TESTDIR + "/expected_failures/my_port_not_int.ini"
 SIMPLE = TESTDIR + "/simple/search.ini"
 PSQL_MYSQL = TESTDIR + "/psql_mysql/search.ini"
+DIRECT = TESTDIR + "/direct/search.ini"
 
 def test_get_search_config():
     sc_simple = SearchConfiguration(SIMPLE)
@@ -97,4 +101,29 @@ def test_parse_psql_mysql():
     assert isinstance(my_handle.params['port'], int)
     assert ('user', 'root') in my_handle.params.items()
     assert ['employees', 'sakila', 'sportsdb'] == my_handle.databases
+
+
+def test_parse_direct():
+    sc = SearchConfiguration(DIRECT)
+    sc.get_search_config()
+    parsed = sc.parse()
+
+    assert parsed
+
+    assert len(sc.handles) == 2
+    assert isinstance(sc.handles[0], PSQLHandle)
+    assert isinstance(sc.handles[1], MetaHandle)
+
+    pg_handle = sc.handles[0]
+
+    assert pg_handle.name == 'ClassicModels'
+    assert "host=localhost" in pg_handle.dsn
+    assert "port=5432" in pg_handle.dsn
+    assert "user=classic_user" in pg_handle.dsn
+    assert "dbname=classicmodels" in pg_handle.dsn
+
+    meta_handle = sc.handles[1]
+
+    assert meta_handle.name == 'employees sakila sportsdb'
+    assert meta_handle.path == '/tmp/mysql.meta'
 

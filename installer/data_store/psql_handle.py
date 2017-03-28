@@ -1,6 +1,4 @@
-import csv
 import psycopg2
-import MySQLdb
 
 class PSQLHandle(object):
     SQL_GET_META_DATA = """
@@ -57,9 +55,16 @@ ON
 USING (table_oid)
 GROUP BY schema_name, table_name, table_comment"""
 
-    def __init__(self, name, dsn):
+    def __init__(self, name, conf):
         self.name = name
-        self.dsn = dsn
+        if 'port' in conf:
+            try:
+                port = int(conf['port'])
+            except ValueError:
+                raise Exception("""Unexpected value of "port" found in section [{}].
+                    """.format(name))
+        del conf['data_store']
+        self.dsn = " ".join([k+"="+v for k, v in conf.items()])
 
     def connect(self):
         self.connection = psycopg2.connect(self.dsn)
@@ -75,49 +80,3 @@ GROUP BY schema_name, table_name, table_comment"""
         f.close()
         cur.close()
 
-
-class MySQLHandle(object):
-    SQL_GET_META_DATA = """
-SELECT
-    concat(t.table_schema, '.', t.table_name) AS title,
-    concat_ws(' ', t.table_schema, t.table_name, t.table_comment,
-        group_concat(
-            concat(c.column_name, ' ', c.column_comment) SEPARATOR ' '
-        )
-    ) AS content
-FROM
-    information_schema.tables t,
-    information_schema.columns c
-WHERE
-    t.table_schema NOT IN
-    (
-        'performance_schema',
-        'mysql',
-        'sys',
-        'information_schema'
-    )
-AND t.table_name = c.table_name
-AND t.table_schema IN {databases}
-GROUP BY
-    t.table_schema, t.table_name, t.table_comment"""
-
-    def __init__(self, name, params):
-        self.name = name
-        self.databases = [d.strip() for d in params.pop('db').split(',')]
-        self.params = params
-
-    def connect(self):
-        self.connection = MySQLdb.connect(**self.params)
-
-    def close(self):
-        self.connection.close()
-
-    def copy_raw_meta_data(self, output_path, append=False):
-        cur = self.connection.cursor()
-        f = open(output_path, 'a' if append else 'w')
-        cur.execute(MySQLHandle.SQL_GET_META_DATA.format(
-            databases=str(tuple(self.databases))))
-        writer = csv.writer(f, lineterminator='\n')
-        writer.writerows(list(cur))
-        f.close()
-        cur.close()
