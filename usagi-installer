@@ -77,11 +77,11 @@ fi
 
 META_DATA_FILE=/tmp/still_simple.meta
 rm ${META_DATA_FILE} 2> /dev/null
-CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-(cd ${CURR_DIR}; pip install -r requirements.txt)
-cd ${CURR_DIR}/solr
+pip install -r requirements.txt
+cd solr
 ./setup.sh
-cd ${CURR_DIR}
+cd ..
 ./run installer/run.py ${DATA_STORE} ${META_DATA_FILE}
-${CURR_DIR}/solr/solr/bin/solr stop
+solr/solr/bin/solr stop -force
+echo "done."
 

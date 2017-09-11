@@ -4,12 +4,14 @@ import MySQLdb
 class MySQLHandle(object):
     SQL_GET_META_DATA = """
 SELECT
+    concat('{section}', ".", t.table_schema, ".", t.table_name) as universal_id,
     concat(t.table_schema, '.', t.table_name) AS title,
     concat_ws(' ', t.table_schema, t.table_name, t.table_comment,
         group_concat(
             concat(c.column_name, ' ', c.column_comment) SEPARATOR ' '
         )
-    ) AS content
+    ) AS content,
+    concat('{section}', '/', t.table_schema) as path
 FROM
     information_schema.tables t,
     information_schema.columns c
@@ -54,6 +56,7 @@ GROUP BY
         cur = self.connection.cursor()
         f = open(output_path, 'a' if append else 'w')
         cur.execute(MySQLHandle.SQL_GET_META_DATA.format(
+            section=self.name,
             databases=str(tuple(self.databases))))
         writer = csv.writer(f, lineterminator='\n')
         writer.writerows(list(cur))

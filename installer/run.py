@@ -3,7 +3,7 @@ import sys
 import csv
 from installer.tool_config import *
 from lib.database import Document, Database
-from lib.solr import solr
+from lib.solr import Solr
 
 def main(args):
     if len(args) != 2:
@@ -39,11 +39,14 @@ def main(args):
     with open(meta_data_file) as metadata:
         reader = csv.reader(metadata)
         for row in reader:
-            doc.create(row[0], row[1])
+            if len(row) > 3:
+                doc.create(row[0], row[1], row[2], row[3])
+            else:
+                doc.create(row[0], row[1], row[2])
     doc.close()
 
     # database to solr
-    s = solr()
+    s = Solr()
     db = Database()
     db.connect()
     cursor = db.cursor()
@@ -51,13 +54,15 @@ def main(args):
     datalist = []
     for row in cursor.fetchall():
         datalist.append({
+            "universal_id_s": row["universal_id"],
             "title_s": row["title"],
             "all_txt_ng": row["keywords"],
+            "path_s": row["path"],
         })
     cursor.close()
     db.close()
-    s.delete(q="*:*")
-    s.add(datalist)
+    s.solr().delete(q="*:*")
+    s.solr().add(datalist)
 
     return 0
 

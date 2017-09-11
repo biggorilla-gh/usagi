@@ -3,12 +3,14 @@ import psycopg2
 class PSQLHandle(object):
     SQL_GET_META_DATA = """
 SELECT
+    '{section}' || '.' || schema_name || '.' || table_name AS universal_id,
     CASE WHEN schema_name = 'public' THEN table_name
         ELSE schema_name || '.' || table_name END AS title,
     schema_name || ' '
     || table_name || ' '
     || table_comment || ' '
-    || string_agg(column_name || ' ' || column_comment, ' ') AS content
+    || string_agg(column_name || ' ' || column_comment, ' ') AS content,
+    '{section}' || '/' || schema_name AS path
 FROM
 (
 SELECT
@@ -75,7 +77,7 @@ GROUP BY schema_name, table_name, table_comment"""
     def copy_raw_meta_data(self, output_path, append=False):
         cur = self.connection.cursor()
         f = open(output_path, 'a' if append else 'w')
-        sql_copy = "COPY (%s) TO STDOUT WITH CSV" % PSQLHandle.SQL_GET_META_DATA
+        sql_copy = "COPY (%s) TO STDOUT WITH CSV" % PSQLHandle.SQL_GET_META_DATA.format(section=self.name)
         cur.copy_expert(sql_copy, f)
         f.close()
         cur.close()

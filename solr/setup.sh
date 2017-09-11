@@ -21,13 +21,13 @@ function download {
 	fi
 
 	if [ $download = 1 ]; then
-		curl $url -o $filepath
+		curl $url -L -o $filepath
 	fi
 
 }
 
 if [ -f $DEST/bin/solr ]; then
-  $DEST/bin/solr stop
+  $DEST/bin/solr stop -force
 fi
 
 rm -rf $DEST
@@ -40,9 +40,9 @@ tar zxvf $DOWNLOAD_DIR/solr.tgz -C $DEST --strip=1
 
 echo "SOLR_PORT=$PORT" >> $DEST/bin/solr.in.sh
 
-$DEST/bin/solr start
+$DEST/bin/solr start -force
 sleep 5
-$DEST/bin/solr create -c $CORE -p $PORT
+$DEST/bin/solr create -c $CORE -p $PORT -force
 
 download 2b78bbd7df747b74498766a1cc12af822a6a1a33 jts.zip https://sourceforge.net/projects/jts-topo-suite/files/jts/1.14/jts-1.14.zip/download
 
@@ -72,5 +72,8 @@ cp $DOWNLOAD_DIR/kotlin-stdlib-1.0.5-3.jar $CORE_PATH/lib/
 ./gradlew jar
 cp build/libs/$JAR $CORE_PATH/lib/
 
-$DEST/bin/solr restart
+$DEST/bin/solr stop -force
 sleep 5
+$DEST/bin/solr start -force
+sleep 5
+

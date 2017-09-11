@@ -42,12 +42,22 @@ class Document():
         self.db = Database()
         self.db.connect()
         self.cursor = self.db.cursor()
-        self.import_statement = "INSERT INTO documents (title, keywords) VALUES (%s, %s)"
+        self.import_statement = "INSERT INTO documents (universal_id, title, keywords, path) VALUES (%s, %s, %s, %s)"
     def clear(self):
         self.cursor.execute("truncate table documents")
 
-    def create(self, title, keywords):
-        self.cursor.execute(self.import_statement, (title, keywords))
+    def create(self, universal_id, title, keywords, path=None):
+        self.cursor.execute(self.import_statement, (universal_id, title, keywords, path))
+
+    def filters(self, parent_id = 0, depth = 1):
+        query = "select * from filters where parent_id = %s"
+        self.cursor.execute(query, (parent_id,))
+        fs = self.cursor.fetchall()
+        fs = [dict(f) for f in fs]
+        if depth > 1:
+            for f in fs:
+                f["children"] = self.filters(f["id"], depth-1)
+        return fs
 
     def close(self):
         self.cursor.close()

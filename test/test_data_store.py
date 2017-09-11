@@ -29,10 +29,10 @@ def test_pg_copy_raw_meta_data():
         products_table_exists = 0
         for row in reader:
             n_tables += 1
-            if row[0] == 'Products':
+            if row[1] == 'Products':
                 products_table_exists += 1
-                assert "xmin" in row[1]
-                assert "productDescription" in row[1]
+                assert "xmin" in row[2]
+                assert "productDescription" in row[2]
         assert n_tables == 8
         assert products_table_exists == 1
 
@@ -65,14 +65,14 @@ def test_pg_my_copy_raw_meta_data():
         tennis_service_table_exists = 0
         for row in reader:
             n_tables += 1
-            if row[0] == 'Products':
+            if row[1] == 'Products':
                 products_table_exists += 1
-                assert "xmin" in row[1]
-                assert "productDescription" in row[1]
-            if row[0] == 'sportsdb.tennis_service_stats':
+                assert "xmin" in row[2]
+                assert "productDescription" in row[2]
+            if row[1] == 'sportsdb.tennis_service_stats':
                 tennis_service_table_exists = 1
-                assert "second_service_points_won" in row[1]
-                assert "break_points_played" in row[1]
+                assert "second_service_points_won" in row[2]
+                assert "break_points_played" in row[2]
         assert n_tables == 144
         assert products_table_exists == 1
         assert tennis_service_table_exists == 1
@@ -105,14 +105,14 @@ def test_direct_copy_meta_data():
         tennis_service_table_exists = 0
         for row in reader:
             n_tables += 1
-            if row[0] == 'Products':
+            if row[1] == 'Products':
                 products_table_exists += 1
-                assert "xmin" in row[1]
-                assert "productDescription" in row[1]
-            if row[0] == 'sportsdb.tennis_service_stats':
+                assert "xmin" in row[2]
+                assert "productDescription" in row[2]
+            if row[1] == 'sportsdb.tennis_service_stats':
                 tennis_service_table_exists = 1
-                assert "second_service_points_won" in row[1]
-                assert "break_points_played" in row[1]
+                assert "second_service_points_won" in row[2]
+                assert "break_points_played" in row[2]
         assert n_tables == 144
         assert products_table_exists == 1
         assert tennis_service_table_exists == 1
