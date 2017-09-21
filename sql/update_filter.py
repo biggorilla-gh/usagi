@@ -24,4 +24,3 @@ for row in cursor.fetchall():
 cursor.close()
 db.commit()
 db.close()
-

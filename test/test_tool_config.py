@@ -1,6 +1,6 @@
 import os
 import pytest
-import ConfigParser
+from configparser import MissingSectionHeaderError
 from installer.tool_config import *
 from installer.data_store.psql_handle import PSQLHandle
 from installer.data_store.mysql_handle import MySQLHandle
@@ -21,7 +21,7 @@ def test_get_search_config():
 
     assert len(sc_simple.config.sections()) > 0
 
-    with pytest.raises(ConfigParser.MissingSectionHeaderError):
+    with pytest.raises(MissingSectionHeaderError):
         sc_no_section_header = SearchConfiguration(NO_SECTION_HEADER)
         sc_no_section_header.get_search_config()
 

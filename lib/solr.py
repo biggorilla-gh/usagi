@@ -45,4 +45,3 @@ class Solr:
         for k, v in escapeRules.items():
             query = query.replace(k, v)
         return query
-

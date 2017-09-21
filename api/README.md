@@ -64,4 +64,3 @@ curl http://54.199.246.169:8085/api/filters?depth=2
   }
 ]
 ```
-

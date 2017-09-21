@@ -1,5 +1,6 @@
+from __future__ import print_function
 import sys
-import ConfigParser
+import configparser
 
 class SearchConfiguration(object):
     def __init__(self, config_file_path):
@@ -7,7 +8,7 @@ class SearchConfiguration(object):
         self.handles = []
 
     def get_search_config(self):
-        self.config = ConfigParser.SafeConfigParser()
+        self.config = configparser.SafeConfigParser()
         self.config.read(self.config_file_path)
 
     def parse(self):
@@ -29,7 +30,7 @@ class SearchConfiguration(object):
                         (psql, mysql, meta) are currently supported.
                         """.format(**locals()))
             except Exception as e:
-                print >> sys.stderr, e.message
+                print(sys.exc_info()[1], file=sys.stderr)
                 return False
         return True
 

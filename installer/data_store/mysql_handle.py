@@ -57,7 +57,8 @@ GROUP BY
         f = open(output_path, 'a' if append else 'w')
         cur.execute(MySQLHandle.SQL_GET_META_DATA.format(
             section=self.name,
-            databases=str(tuple(self.databases))))
+            databases=str(tuple(self.databases)).replace('u', '')
+        ))
         writer = csv.writer(f, lineterminator='\n')
         writer.writerows(list(cur))
         f.close()
