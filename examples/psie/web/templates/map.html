@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+  <h4 style="text-align:center;">Open Government Dataset Search</h4>
+  <h6 style="margin-top:-10px;text-align:center;">Powered by Usagi and Public Sector Information Exchange</h6>
+  <form>
+    <div class="row">
+	  <div class="col s12">
+	    <div>
+          <div class="input-field col s6">
+		    <input id="query" name="q" type="text" value="{{ q if q else "" | e }}" class="validate">
+            <label for="query">query</label>
+          </div>
+          <div class="col s2" style="margin-top:20px;">
+            <button class="btn waves-effect waves-light" id="search_button" type="submit">Search
+            </button>
+		  </div>
+        </div>
+      </div>
+	</div>
+    <div class="row" id="big_map">
+	  <div class="col s12">
+        <div style="position:relative;">
+          <div id="map" class="map" style="height:300px;"></div>
+          <a class="closeButton btn-floating waves-effect waves-light blue" style="position:absolute;right:20px;top:5px;">
+            <i class="material-icons">clear</i>
+          </a>
+          <a class="drawButton btn-floating waves-effect waves-light blue" style="position:absolute;right:20px;top:50px;">
+            <i class="material-icons">mode_edit</i>
+          </a>
+          <a class="searchButton btn-floating waves-effect waves-light blue" style="position:absolute;right:20px;top:95px;">
+            <i class="material-icons">search</i>
+          </a>
+          <a class="deleteButton btn-floating waves-effect waves-light red lighten-2" style="position:absolute;right:20px;top:140px;">
+            <i class="material-icons">delete</i>
+          </a>
+          <a class="clickButton btn-floating waves-effect waves-light blue" style="position:absolute;right:20px;top:185px;">
+            <i class="material-icons">touch_app</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s3">
+        <div style="position:relative;" id="mini_map_wrapper">
+          <div id="mini_map" class="map"></div>
+          <a class="miniDrawButton btn-floating waves-effect waves-light blue" style="position:absolute;right:20px;top:5px;">
+            <i class="material-icons">mode_edit</i>
+          </a>
+        </div>
+
+        <div>
+          <div class="input-field">
+		    <input id="from" name="from" type="date" value="{{ f if f else "" | e }}" class="datepicker">
+            <label for="from">issue_date from</label>
+          </div>
+          <div class="input-field">
+		    <input id="to" name="to" type="date" value="{{ to if to else "" | e }}" class="datepicker">
+            <label for="to">issue_date to</label>
+          </div>
+        </div>
+
+	  </div>
+	  <div class="col s9">
+        <div style="margin-left:30px;">
+          total: {{ hits }}
+        </div>
+        <input type="hidden" name="geo" value="{{ geo if geo else "" | e }}"/>
+
+      {% for d in docs %}
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">{{ d.title_s | truncate(60, True, '...') }}</span>
+	          <p>{{ d.description_s | truncate(300, True, '...') }}</p>
+            </div>
+            <div class="card-action right-align">
+	          <a href="/detail/{{ d.id_l }}">Show Detail</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+        <div style="margin-left:30px;">
+          <ul class="pagination">
+	      {% for p in pages %}
+	        <li class="{{ "active" if p.current else "waves-effect" }}"><a href="?q={{ q if q else "" | e }}&p={{ p.page }}&geo={{ geo if geo else "" | e }}">{{ p.page }}</a></li>
+	      {% endfor %}
+          </ul>
+        </div>
+	  </div>
+    </div>
+  </form>
+  <div id="popover" style="position:absolute;left:0;top:0;padding:5px;display:inline-block;background-color:black;color:white;"></div>
+</div>
+
+<div id="map_search_modal" class="modal">
+  <div class="modal-content">
+    <h4>Map Search</h4>
+    <p>
+	  <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="query" id="mapq" type="text">
+          <label for="mapq">query</label>
+        </div>
+      </div>
+      <div class="row" style="max-height:200px;min-height:200px;overflow:scroll;">
+        <table class="map_candidates highlight">
+        </table>
+      </div>
+	</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<link rel="stylesheet" href="https://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>
+<script src="js/map.js"></script>
+<script>
+  function initMap() {
+    var map = new AppMap();
+    map.init()
+    {% if geo: %}
+    map.drawRect({{ geo | safe }});
+    {% endif %}
+	$("#big_map").hide();
+  }
+  $(document).ready(function() {
+    initMap();
+  });
+</script>
+<style>
+  .ol-dragbox {
+    background-color: rgba(255,255,255,0.4);
+    border-color: rgba(100,150,0,1);
+  }
+</style>
+{% endblock %}

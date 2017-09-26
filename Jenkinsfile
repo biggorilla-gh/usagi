@@ -37,7 +37,7 @@ node {
       }
 
       stage("pip install") {
-        sh 'pip install -r requirements.txt'
+        sh 'pip install -r requirements/common.txt'
       }
 
       stage("Setup usagi") {

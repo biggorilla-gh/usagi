@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3.js Force Layout</title>
+</head>
+<body>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        var width = 640;
+        var height = 480;
+
+        var svg = d3.select('body').append('svg').attr({
+            width: width,
+            height: height
+        });
+
+	var data = JSON.parse('{{ data | safe }}');
+
+        var force = d3.layout.force()
+            .nodes(data.nodes)
+            .links(data.links)
+            .size([width, height])
+            .gravity(0.1)
+            .charge([-100])
+            .friction(0.5)
+            .linkDistance([160])
+            .linkStrength(0.5);
+
+        // レイアウト計算開始
+        force.start();
+
+        // lineを生成
+        var line = svg.selectAll('line')
+            .data(data.links)
+            .enter()
+	    .append('g')
+            .append('line')
+            .attr({
+                'stroke': 'gray',
+                'x1': function(d, i) { return d.source.x; },
+                'y1': function(d, i) { return d.source.y; },
+                'x2': function(d, i) { return d.target.x; },
+                'y2': function(d, i) { return d.target.y; }
+            })
+            .style({
+            })
+/*           .append('text')
+	    .attr({
+                'x': function(d, i) { return (d.source.x + d.target.x) / 2; },
+                'y': function(d, i) { return (d.source.y + d.target.y) / 2; }
+	    })
+            .text(function(d) { return d.score });
+*/
+        var circle = svg.selectAll('text')
+            .data(data.nodes)
+            .enter()
+            .append('text')
+            .attr({
+                'x': function(d, i) { return d.x; },
+                'y': function(d, i) { return d.y; }
+            })
+            .text(function(d) { return d.name; })
+            .style({
+            })
+            .call(force.drag);
+
+        circle
+	    .on("mousemove", function(d, i) {
+                d3.event.preventDefault();
+	    })
+            .on('click', function(d, i) {
+		location.href="/graph/" + d.name;
+            });
+
+        force.on('tick', function() {
+            line
+                .attr({
+                    'x1': function(d) { return d.source.x; },
+                    'y1': function(d) { return d.source.y; },
+                    'x2': function(d) { return d.target.x; },
+                    'y2': function(d) { return d.target.y; }
+                });
+            circle
+                .attr({
+                    'x': function(d) { return d.x; },
+                    'y': function(d) { return d.y; }
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+
+      <table>
+        <tbody>
+	  {% for k in data._column_mapping %}
+          <tr>
+		  <th>{{ k }}</th>
+            <td>{{ data[k] }}</td>
+          </tr>
+	  {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

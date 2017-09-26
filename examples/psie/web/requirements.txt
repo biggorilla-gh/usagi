@@ -1,0 +1,7 @@
+psycopg2
+flask
+pysolr
+requests
+autopep8
+pycountry
+pyshp

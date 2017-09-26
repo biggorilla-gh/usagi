@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+  <h4>Public Sector Information Exchange</h4>
+  <form>
+    <div class="row">
+      <div class="col s12">
+        <div class="input-field col s6">
+	  <select name="country">
+          </select>
+          <label>country</label>
+        </div>
+        <div class="input-field col s6">
+	  <select name="subdivision">
+          </select>
+          <label>subdivision</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="input-field col s6">
+		<input id="query" name="q" type="text" value="{{ q if q else "" | e }}" class="validate">
+          <label for="query">query</label>
+        </div>
+        <div class="col s2" style="margin-top:20px;">
+          <button class="btn waves-effect waves-light" type="submit">Search
+          </button>
+	</div>
+      </div>
+      <div class="col s12">
+      total: {{ hits }}
+        <ul class="pagination">
+	  {% for p in pages %}
+	  <li class="{{ "active" if p.current else "waves-effect" }}"><a href="?q={{ q if q else "" | e }}&p={{ p.page }}&country={{ country if country else "" | e }}&subdivision={{ subdivision if subdivision else "" | e }}">{{ p.page }}</a></li>
+	  {% endfor %}
+        </ul>
+      </div>
+    </form>
+
+    {% for d in docs %}
+    <div class="col s12">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{ d.title_s | truncate(60, True, '...') }}</span>
+	  <p>{{ d.description_s | truncate(300, True, '...') }}</p>
+        </div>
+        <div class="card-action right-align">
+	  <a href="/detail/{{ d.id_l }}">Show Detail</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+  Materialize.updateTextFields();
+
+  // drop down
+  var initialize = false
+  var countries = {{ countries | safe }};
+  function clearSubdivision() {
+    var select = $('[name=subdivision]');
+    select.empty();
+    addNonSelectedOption(select);
+  }
+  function updateSubdivision(country) {
+    var select = $('[name=subdivision]')
+    countries.forEach(function(c) {
+      if (c.name == country) {
+        c.children.forEach(function(s) {
+          select.append($('<option/>').val(s).text(s));
+        });
+      }
+    });
+  }
+  function addNonSelectedOption(select) {
+    select.append($('<option/>').text('---').attr({'disabled':1,'selected':1}));
+  }
+  $('[name=country]').on('change', function() {
+    clearSubdivision();
+    $(':selected', this).each(function() {
+      updateSubdivision($(this).val());
+    });
+    if (!initialize) {
+      $('[name=subdivision]').val('{{ subdivision | safe }}')
+    }
+    $('[name=subdivision]').material_select();
+    initialize = true
+  });
+    addNonSelectedOption($('[name=country]'));
+  countries.forEach(function(c) {
+    $('[name=country]').append($('<option/>').val(c.name).text(c.name));
+  });
+  $('[name=country]').val('{{ country | safe }}');
+  $('[name=country]').material_select();
+  $('[name=country]').change();
+});
+</script>
+{% endblock %}

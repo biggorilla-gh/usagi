@@ -1004,7 +1004,7 @@
     -->
     <fieldType name="text_ngram" class="solr.TextField" autoGeneratePhraseQueries="true">
       <analyzer>
-        <tokenizer class="jp.recruit.solr_ext.NGramTokenizerFactory" maxGramSize="2" minGramSize="2"/>
+        <tokenizer class="org.biggorilla.solr_ext.NGramTokenizerFactory" maxGramSize="2" minGramSize="2"/>
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
     </fieldType>

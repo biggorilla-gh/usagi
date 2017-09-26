@@ -1416,7 +1416,7 @@
     -->
 
     <lib dir="./lib" />
-    <valueSourceParser name="len" class="jp.recruit.solr_ext.LenValueSourceParser" />
+    <valueSourceParser name="len" class="org.biggorilla.solr_ext.LenValueSourceParser" />
 
 </config>
 

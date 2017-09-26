@@ -1,4 +1,6 @@
 *.pyc
 *.swp
+*.swo
 .cache
 .DS_Store
+docs/build

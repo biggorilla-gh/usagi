@@ -1,0 +1,258 @@
+{% extends "layout.html" %}
+{% block body %}
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+	  <a id="logo-container" href="#" class="brand-logo">Open Government Dataset Search</a>
+      <form style="text-align:right;" action="/map">
+	    <div class="input-field" style="display:inline-block;width:300px;">
+          <input id="search" name="q" type="search">
+		  <label class="label-icon" style="right:1rem;" for="search">
+		    <i class="material-icons">search</i>
+		  </label>
+        </div>
+	  </form>
+	</div>
+<!--
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+-->
+  </nav>
+<div class="row">
+
+      <div class="col s3">
+
+        <div class="card-panel teal lighten-2">
+          <p class="white-text flow-text">{{ publication.publisher }}</p>
+        </div>
+
+        <div class="card-panel teal lighten-2 white-text">
+          <h5>contacts</h5>
+		  {% if publication.contact_name %}
+          <div class="valign-wrapper">
+            <i class="material-icons">account_box</i> {{ publication.contact_name }}
+          </div>
+	      {% endif %}
+		  {% if publication.contact_email %}
+          <div class="valign-wrapper">
+            <i class="material-icons">email</i> {{ publication.contact_email }}
+          </div>
+	      {% endif %}
+		  {% if publication.contact_phone %}
+          <div class="valign-wrapper">
+            <i class="material-icons">phone</i> {{ publication.contact_phone }}
+          </div>
+	      {% endif %}
+        </div>
+
+        <div class="card-panel">
+          <div id="map" class="map" style="height:200px;"></div>
+        </div>
+
+      </div>
+
+      <div class="col s9">
+        <h3>{{ publication.title }}</h3>
+
+        <div class="valign-wrapper">
+          <i class="material-icons">date_range</i>
+          metadata updated: {{ publication.crawl_time }}
+        </div>
+
+        <br/>
+        <br/>
+
+        <div class="divider"></div>
+		{% if publication.licence %}
+        <div class="section">
+          licence: {{ publication.licence }}
+        </div>
+        <div class="divider"></div>
+		{% endif %}
+
+        <br/>
+
+        <div>
+          {{ publication.description }}
+        </div>
+
+        <br/>
+        <br/>
+        {% if publication.keywords %}
+        <h5>keywords</h5>
+        <div class="section">
+		  {% for k in re.split(";|,", publication.keywords) %}
+          <div class="chip">{{ k }}</div>
+          {% endfor %}
+        </div>
+
+        <br/>
+        <br/>
+        {% endif %}
+
+        <h5>Resources</h5>
+        <table class="bordered highlight">
+          <tbody>
+		    {% for l in links %}
+            <tr>
+              <th>{{ l.label }}</th>
+              <td><a href="{{ l.url }}">{{ l.url }}</a></td>
+            </tr>
+			{% endfor %}
+          </tbody>
+        </table>
+
+		<br/>
+		<br/>
+
+        <h5>Dates</h5>
+        <table class="bordered highlight">
+          <tbody>
+		    {% if publication.created_at %}
+            <tr>
+              <th>created_at</th>
+              <td>{{ publication.created_at }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.updated_at %}
+            <tr>
+              <th>updated_at</th>
+              <td>{{ publication.updated_at }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.issue_date %}
+            <tr>
+              <th>issue_date</th>
+              <td>{{ publication.issue_date }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.upload_date %}
+            <tr>
+              <th>upload_date</th>
+              <td>{{ publication.upload_date }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.crawl_time %}
+            <tr>
+              <th>crawl_time</th>
+              <td>{{ publication.crawl_time }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.release_date %}
+            <tr>
+              <th>release_date</th>
+              <td>{{ publication.release_date }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.last_update_date %}
+            <tr>
+              <th>last_update_date</th>
+              <td>{{ publication.last_update_date }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.update_frequency %}
+            <tr>
+              <th>update_frequency</th>
+              <td>{{ publication.update_frequency }}</td>
+            </tr>
+			{% endif %}
+          </tbody>
+        </table>
+
+		<br/>
+		<br/>
+
+        <h5>Additional Metadata</h5>
+        <table class="bordered highlight">
+          <tbody>
+		    {% if publication.catalog_id %}
+            <tr>
+              <th>catalog_id</th>
+              <td>{{ publication.catalog_id }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.category %}
+            <tr>
+              <th>category</th>
+              <td>{{ publication.category }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.language %}
+            <tr>
+              <th>language</th>
+              <td>{{ publication.language }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.temporal_bounds %}
+            <tr>
+              <th>temporal_bounds</th>
+              <td>{{ publication.temporal_bounds }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.access_level %}
+            <tr>
+              <th>access_level</th>
+              <td>{{ publication.access_level }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.access_level_comment %}
+            <tr>
+              <th>access_level_comment</th>
+              <td>{{ publication.access_level_comment }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.bureau_code %}
+            <tr>
+              <th>bureau_code</th>
+              <td>{{ publication.bureau_code }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.program_code %}
+            <tr>
+              <th>program_code</th>
+              <td>{{ publication.program_code }}</td>
+            </tr>
+			{% endif %}
+		    {% if publication.data_quality %}
+            <tr>
+              <th>data_quality</th>
+              <td>{{ publication.data_quality }}</td>
+            </tr>
+			{% endif %}
+	      </tbody>
+		</table>
+
+      </div>
+
+    </div>
+
+  <footer class="page-footer">
+      <div class="container white-text">
+      PSIE project
+      </div>
+      <br/>
+  </footer>
+{% endblock %}
+
+{% block script %}
+<link rel="stylesheet" href="https://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>
+<script src="/js/map.js"></script>
+<script>
+  $(document).ready(function() {
+    var map = new AppMap();
+    map.init();
+    {% if publication.spatial_bounds %}
+	{% if publication.spatial_bounds != "N/A" %}
+    map.drawRect({{ publication.spatial_bounds | safe }});
+    {% endif %}
+    {% endif %}
+  });
+</script>
+{% endblock %}

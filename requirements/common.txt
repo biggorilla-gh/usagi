@@ -1,0 +1,9 @@
+pytest
+psycopg2
+pytest-pythonpath
+pysolr
+mysqlclient == 1.3.10
+Flask
+configparser
+future
+six

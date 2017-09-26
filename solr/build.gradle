@@ -1,4 +1,4 @@
-group 'jp.recruit.solr_ext'
+group 'org.biggorilla.solr_ext'
 version '1.0.2'
 
 buildscript {
