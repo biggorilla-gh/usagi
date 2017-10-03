@@ -46,6 +46,7 @@ class Document():
 
     def clear(self):
         self.cursor.execute("truncate table documents")
+        self.cursor.execute("truncate table filters")
 
     def create(self, universal_id, title, keywords, path=None):
         self.cursor.execute(self.import_statement, (universal_id, title, keywords, path))
@@ -64,4 +65,22 @@ class Document():
         self.cursor.close()
         self.db.commit()
         self.db.close()
+
+    def find_or_insert(self, parent_id, name):
+        self.cursor.execute("select id from filters where parent_id = %s and name = %s", (parent_id, name))
+        row = self.cursor.fetchone()
+        if not row:
+            self.cursor.execute("insert into filters (parent_id, name) values (%s, %s)", (parent_id, name))
+            return self.find_or_insert(parent_id, name)
+        else:
+            return row["id"]
+
+    def update_filters(self):
+        self.cursor.execute("select distinct path from documents where path is not null")
+
+        for row in self.cursor.fetchall():
+            path = row["path"].split("/")
+            parent_id = 0
+            for p in path:
+                parent_id = self.find_or_insert(parent_id, p)
 

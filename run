@@ -1,3 +1,17 @@
 #!/bin/bash
-PYTHONPATH=$(cd $(dirname $(readlink -f $0 || echo $0));pwd -P) python $@
+abs_dirname() {
+  local cwd="$(pwd)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+    cd "${path%/*}"
+    local name="${path##*/}"
+    path="$(readlink "$name" || true)"
+  done
+
+  pwd -P
+  cd "$cwd"
+}
+
+PYTHONPATH="$(abs_dirname "$0")" python $@
 

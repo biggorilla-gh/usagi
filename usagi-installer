@@ -82,7 +82,6 @@ cd solr
 ./setup.sh
 cd ..
 ./run installer/run.py ${DATA_STORE} ${META_DATA_FILE}
-./run sql/update_filter.py
 solr/solr/bin/solr stop -force
 echo "done."
 

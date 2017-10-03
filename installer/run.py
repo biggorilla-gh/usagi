@@ -43,6 +43,8 @@ def main(args):
                 doc.create(row[0], row[1], row[2], row[3])
             else:
                 doc.create(row[0], row[1], row[2])
+
+    doc.update_filters()
     doc.close()
 
     # database to solr
