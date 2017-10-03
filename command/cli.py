@@ -28,6 +28,7 @@ while True:
             print "  " + d.get("title"),
             if d.get("path"):
                 print "  " + d.get("path")
+        print "\n"
     if command == "total":
         res = s.list()
         print "total: " + str(res["hits"])

@@ -60,16 +60,6 @@ class Document():
                 f["children"] = self.filters(f["id"], depth-1)
         return fs
 
-    def filters(self, parent_id = 0, depth = 1):
-        query = "select * from filters where parent_id = %s"
-        self.cursor.execute(query, (parent_id,))
-        fs = self.cursor.fetchall()
-        fs = [dict(f) for f in fs]
-        if depth > 1:
-            for f in fs:
-                f["children"] = self.filters(f["id"], depth-1)
-        return fs
-
     def close(self):
         self.cursor.close()
         self.db.commit()
