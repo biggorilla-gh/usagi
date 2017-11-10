@@ -1,0 +1,65 @@
+FROM alpine:latest
+
+USER root
+
+RUN \
+    set -x && \
+    apk update && \
+    apk --no-cache add openrc && \
+    apk --no-cache add mysql && \
+    apk --no-cache add mysql-client && \
+    apk --no-cache add mysql-dev && \
+    apk --no-cache add postgresql && \
+    apk --no-cache add postgresql-dev && \
+    apk --no-cache add openjdk8 && \
+    apk --no-cache add gcc && \
+    apk --no-cache add musl-dev && \
+    apk --no-cache add python2 && \
+    apk --no-cache add python2-dev && \
+    apk --no-cache add py2-pip && \
+    apk --no-cache add git && \
+    apk --no-cache add bash && \
+    apk --no-cache add curl && \
+    apk --no-cache add tar && \
+    apk --no-cache add openssl && \
+    openrc && \
+    touch /run/openrc/softlevel && \
+    rm -rf /var/cache/apk/* && \
+    rc-status
+
+RUN mkdir /usagi
+COPY . /usagi/
+
+RUN \
+    # setup services
+    /usr/bin/mysql_install_db --user=mysql && \
+    rc-service mariadb start && \
+    rc-update add mariadb && \
+    /usr/bin/mysqladmin -u root password 'root' && \
+    rc-service postgresql start && \
+    rc-update add postgresql && \
+    # setup usagi
+    cd /usagi && \
+    ls -l sql && \
+    psql -U postgres -f sql/create_database.sql && \
+    PGPASSWORD=usagi psql -U usagi -f sql/create_table.sql usagi && \
+    psql -U postgres -f test/data/create_classic_user_and_db.psql && \
+    PGPASSWORD=password psql -U classic_user -f test/data/ClassicModels.psql classicmodels && \
+    mysql -u root -proot < test/data/create_mysql_db.sql && \
+    unzip test/data/sportsdb.zip -o -d test/data && \
+    mysql -u root -proot sportsdb < test/data/sportsdb.sql && \
+    unzip test/data/sakila.zip -o -d test/data && \
+    mysql -u root -proot sakila < test/data/sakila.sql && \
+    unzip test/data/employees.zip -o -d test/data && \
+    mysql -u root -proot employees < test/data/employees.sql && \
+    pip install -r requirements/common.txt && \
+    bash usagi-installer --data-store test/psql_mysql/search.ini && \
+    # stop services
+    rc-service mariadb stop && \
+    rc-service postgresql stop
+
+CMD rc-service mariadb start && \
+    rc-service postgresql start && \
+    cd /usagi && \
+    solr/solr/bin/solr start -force && \
+    bash
