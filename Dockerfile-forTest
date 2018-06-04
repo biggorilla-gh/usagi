@@ -53,6 +53,7 @@ RUN \
     unzip test/data/employees.zip -o -d test/data && \
     mysql -u root -proot employees < test/data/employees.sql && \
     pip install -r requirements/common.txt && \
+    pip install -r requirements/test.txt && \
     bash usagi-installer --data-store test/psql_mysql/search.ini && \
     # stop services
     rc-service mariadb stop && \
