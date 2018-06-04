@@ -62,4 +62,6 @@ CMD rc-service mariadb start && \
     rc-service postgresql start && \
     cd /usagi && \
     solr/solr/bin/solr start -force && \
+    PYTHONPATH=./ python api/server.py & \
+    cd /usagi && \
     bash
