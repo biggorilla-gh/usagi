@@ -3,30 +3,34 @@ import csv
 from installer.run import main
 from lib.database import Document, Database
 from lib.solr import Solr
+import pytest
 
 TESTDIR = os.path.dirname(os.path.abspath(__file__))
 SIMPLE = TESTDIR + "/simple/search.ini"
-PSQL_MYSQL = TESTDIR + "/psql_mysql/search.ini"
-DIRECT = TESTDIR + "/direct/search.ini"
+TEST_META_FILE = "/tmp/simple.meta"
 
+
+# Run this test at the very begging to set up solr
+@pytest.mark.run(order=1)
 def test_installer_simple():
-    silentremove("/tmp/simple.meta")
+    silentremove(TEST_META_FILE)
 
-    error_code = main([SIMPLE, "/tmp/simple.meta"])
+    error_code = main([SIMPLE, TEST_META_FILE])
 
     assert error_code == 0
 
-    with open("/tmp/simple.meta") as metadata:
+    # check metadata file
+    meta = []
+    with open(TEST_META_FILE) as metadata:
         reader = csv.reader(metadata)
-        n_tables = 0
         products_table_exists = 0
         for row in reader:
-            n_tables += 1
             if row[1] == 'Products':
                 products_table_exists += 1
                 assert "xmin" in row[2]
                 assert "productDescription" in row[2]
-        assert n_tables == 8
+            meta.append(row)
+        assert len(meta) == 8
         assert products_table_exists == 1
 
     # check solr
@@ -40,23 +44,17 @@ def test_installer_simple():
     db.connect()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM documents ORDER BY ID")
-    rows = cursor.fetchall()
-    assert len(rows) == 8
-    assert rows[0]["universal_id"] == "ClassicModels.public.OrderDetails"
-    assert rows[1]["universal_id"] == "ClassicModels.public.Offices"
-    assert rows[2]["universal_id"] == "ClassicModels.public.Payments"
-    assert rows[3]["universal_id"] == "ClassicModels.public.ProductLines"
-    assert rows[4]["universal_id"] == "ClassicModels.public.Customers"
-    assert rows[5]["universal_id"] == "ClassicModels.public.Orders"
-    assert rows[6]["universal_id"] == "ClassicModels.public.Employees"
-    assert rows[7]["universal_id"] == "ClassicModels.public.Products"
+    documents = cursor.fetchall()
+    assert len(documents) == len(meta)
+    for i in range(0, len(meta)):
+        assert documents[i]["universal_id"] == "ClassicModels.public." + meta[i][1]
 
     cursor.execute("SELECT * FROM filters ORDER BY ID")
-    rows = cursor.fetchall()
-    assert len(rows) == 2
-    assert rows[0]["name"] == "ClassicModels"
-    assert rows[1]["name"] == "public"
-    assert rows[0]["id"] == rows[1]["parent_id"]
+    filters = cursor.fetchall()
+    assert len(filters) == 2
+    assert filters[0]["name"] == "ClassicModels"
+    assert filters[1]["name"] == "public"
+    assert filters[0]["id"] == filters[1]["parent_id"]
 
 import errno
 
